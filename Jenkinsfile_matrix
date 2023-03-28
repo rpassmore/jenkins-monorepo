@@ -6,28 +6,28 @@ pipeline {
                 axes {
                     axis {
                         name 'service'
-                        values 'foo-service', 'bar-service', 'baz-service'
+                        values 'services/foo-service', 'services/bar-service', 'services/baz-service'
                     }
                 }
-                when { changeset pattern: "services/$service/*" }
+                when { changeset pattern: "$service/*" }
                 stages {
                     stage('build') {
                         steps {
-                            dir("services/$service") {
+                            dir("$service") {
                                 sh "make build"
                             }
                         }
                     }
                     stage('test') {
                         steps {
-                            dir("services/$service") {
+                            dir("$service") {
                                 sh "make service-test"
                             }
                         }
                     }
                     stage('deploy') {
                         steps {
-                            dir("services/$service") {
+                            dir("$service") {
                                 sh "make deploy-qa"
                             }
                         }
